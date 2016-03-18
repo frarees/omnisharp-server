@@ -111,6 +111,17 @@ namespace OmniSharp.Solution
             if (_fileSystem.File.Exists (directAssemblyFile))
                 return directAssemblyFile;
 
+	    string monoPath = System.Environment.GetEnvironmentVariable ("MONO_PATH");
+	    if (monoPath != null)
+	    {
+            	foreach (string searchPath in monoPath.Split(':'))
+		{
+                    string assemblyFile = _fileSystem.Path.Combine (searchPath, evaluatedInclude + ".dll");
+                    if (_fileSystem.File.Exists (assemblyFile))
+                        return assemblyFile;
+		}
+	    }
+
             foreach (string searchPath in AssemblySearch.Paths)
             {
                 string assemblyFile = _fileSystem.Path.Combine (searchPath, evaluatedInclude + ".dll");
