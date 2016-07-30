@@ -72,6 +72,7 @@ namespace OmniSharp.TypeLookup
                 else if (resolveResult is TypeResolveResult)
                 {
                     ambience.ConversionFlags |= ConversionFlags.UseFullyQualifiedTypeNames;
+                    entity = resolveResult.Type.GetDefinition();
                     response.Type = ambience.ConvertType(resolveResult.Type);
                 }
 
