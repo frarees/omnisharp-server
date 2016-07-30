@@ -52,6 +52,14 @@ namespace MonoDevelop.Projects
                     //    sources.Add(((MonoDocSourceNode)node).Directory);
                     sources.Add("/usr/lib/monodoc");
                     sources.Add("/Library/Frameworks/Mono.framework/Versions/Current/lib/monodoc/");
+                    string monodoc = System.Environment.GetEnvironmentVariable("MONO_MONODOC");
+                    if (monodoc != null)
+                    {
+                        foreach (string searchPath in monodoc.Split(':'))
+                        {
+                            sources.Add(searchPath);
+                        }
+                    }
 
                     //remove nonexistent sources
                     foreach (var s in sources.ToList().Where(d => !Directory.Exists(d)))
