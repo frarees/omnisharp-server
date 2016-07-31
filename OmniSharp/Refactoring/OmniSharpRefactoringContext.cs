@@ -170,15 +170,30 @@ namespace OmniSharp.Refactoring
                 yield return new NamingRule(AffectedEntity.ReadonlyField) {
                     Name = "Static Readonly Fields",
                          VisibilityMask = Modifiers.Public | Modifiers.Protected,
-                         NamingStyle = NamingStyle.PascalCase,
+                         NamingStyle = NamingStyle.CamelCase,
                          IncludeInstanceMembers = false
                 };
 
                 yield return new NamingRule(AffectedEntity.Field) {
-                    Name = "Fields",
+                    Name = "Public Fields",
+                         NamingStyle = NamingStyle.CamelCase,
+                         VisibilityMask = Modifiers.Public
+                };
+
+                yield return new NamingRule(AffectedEntity.Field) {
+                    Name = "NonPublic Instance Fields",
+                         NamingStyle = NamingStyle.PascalCase,
+                         VisibilityMask = Modifiers.Protected | Modifiers.Private,
+                         RequiredPrefixes = new[] { "m_" },
+                         IncludeStaticEntities = false
+                };
+
+                yield return new NamingRule(AffectedEntity.Field) {
+                    Name = "NonPublic Static Fields",
                          NamingStyle = NamingStyle.CamelCaseWithLowerLetterUnderscore,
-                         VisibilityMask = Modifiers.Public | Modifiers.Protected,
-                         RequiredPrefixes = new[] { "_" }
+                         VisibilityMask = Modifiers.Protected | Modifiers.Private,
+                         RequiredPrefixes = new[] { "s_" },
+                         IncludeInstanceMembers = false
                 };
 
                 yield return new NamingRule(AffectedEntity.ReadonlyField) {
@@ -197,13 +212,13 @@ namespace OmniSharp.Refactoring
                 yield return new NamingRule(AffectedEntity.Property) {
                     Name = "Properties",
                          VisibilityMask = Modifiers.Public | Modifiers.Protected,
-                         NamingStyle = NamingStyle.PascalCase
+                         NamingStyle = NamingStyle.CamelCase
                 };
 
                 yield return new NamingRule(AffectedEntity.Event) {
                     Name = "Events",
                          VisibilityMask = Modifiers.Public | Modifiers.Protected,
-                         NamingStyle = NamingStyle.PascalCase
+                         NamingStyle = NamingStyle.CamelCase
                 };
 
                 yield return new NamingRule(AffectedEntity.EnumMember) {
